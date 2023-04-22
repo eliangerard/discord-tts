@@ -37,7 +37,7 @@ function base64toBinaryStream(base64Text){
  * @param {string} cfg.splitPunct
  */
 function downloadFromInfoCallback(stream, text, {lang, slow, host, timeout, splitPunct}) {
-    googleTTS.getAudioBase64(text, {lang, slow, host, timeout, splitPunct})
+    googleTTS.getAllAudioBase64(text, {lang, slow, host, timeout, splitPunct})
       .then(base64Audio => base64toBinaryStream(base64Audio))
       .then(audioStream => audioStream.pipe(stream))
       .catch(console.error);
@@ -45,13 +45,13 @@ function downloadFromInfoCallback(stream, text, {lang, slow, host, timeout, spli
 
 /**
  * @param {string} text
- * @param {Language} [lang="en-GB"]
+ * @param {Language} [lang="es-MX"]
  * @param {boolean} [slow=false]
  * @param {string} cfg.host
  * @param {number} cfg.timeout
  * @param {string} cfg.splitPunct
  */
-function getVoiceStream(text, {lang = 'en', slow = false, host = 'https://translate.google.com', timeout = 10000, splitPunct} = {}) {
+function getVoiceStream(text, {lang = 'es', slow = false, host = 'https://translate.google.com', timeout = 10000, splitPunct} = {}) {
     const stream = new Stream.PassThrough();
     downloadFromInfoCallback(stream, text, {lang, slow, host, timeout, splitPunct });
     return stream;
@@ -61,13 +61,13 @@ function getVoiceStream(text, {lang = 'en', slow = false, host = 'https://transl
  * @param {string} filePath
  * @param {string} text
  * @param {PlainObject} cfg
- * @param {Language} [cfg.lang="en-GB"]
+ * @param {Language} [cfg.lang="es-MX"]
  * @param {number} [cfg.slow=false]
  * @param {string} cfg.host
  * @param {number} cfg.timeout
  * @param {string} cfg.splitPunct
  */
-function saveToFile(filePath, text, {lang = 'en-GB', slow = false, host, timeout, splitPunct} = {}) {
+function saveToFile(filePath, text, {lang = 'es-MX', slow = false, host, timeout, splitPunct} = {}) {
     const stream = new Stream.PassThrough();
     const writeStream = fs.createWriteStream(filePath);
     downloadFromInfoCallback(stream, text, {lang, slow, host, timeout, splitPunct });
